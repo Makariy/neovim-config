@@ -51,6 +51,22 @@ vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
 vim.api.nvim_set_keymap('n', '<Leader>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
 
 
+
+-- Auto-wrap text at 80 characters for markdown and text files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "text" },
+  callback = function()
+    vim.opt_local.textwidth = 80      -- wrap lines at 80 characters
+    vim.opt_local.wrap = true         -- enable line wrapping
+    vim.opt_local.formatoptions:append("t")  -- auto-wrap text while typing
+    vim.opt_local.formatoptions:append("t") -- auto-wrap while typing
+    vim.opt_local.formatoptions:append("a") -- auto-wrap on paste
+    vim.opt_local.formatoptions:append("j") -- remove comment leader when joining lines
+    vim.opt_local.formatoptions:append("n") -- smart comment formatting
+  end
+})
+
+-- Initialize Lazy 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
@@ -65,6 +81,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
+-- Show help after 250ms of cursor hover 
 vim.o.updatetime = 250
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
@@ -150,6 +167,9 @@ require("lazy").setup({
     	auto_restore_last_session = false,
   	  }
     },
+    {
+  	  "tpope/vim-fugitive",
+	},
 	-- Dependency for completition
 	{
 		"hrsh7th/nvim-cmp",
@@ -316,6 +336,8 @@ local dapui = require("dapui")
 -- binding for file tree view 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', {})
 
+-- bind no highlight 
+vim.keymap.set('n', '<leader>n', ':noh<CR>', {})
 
 -- bind tab switch 
 vim.keymap.set('n', '<A-Right>', ':tabnext<CR>', { silent = true })
@@ -337,6 +359,32 @@ vim.keymap.set('n', '<Leader>dr', function() dap.repl.open() end)
 vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end)
 vim.keymap.set('n', '<Leader>du', function() dapui.toggle() end)
 vim.keymap.set('n', '<Leader>dt', function() dap.terminate() end)
+
+
+
+-- git mappings 
+
+vim.keymap.set('n', '<leader>gg', function()
+  -- Check if Gdiffsplit is already open by looking for fugitive buffers
+  local found = false
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    local name = vim.api.nvim_buf_get_name(buf)
+    if name:match("fugitive://") then
+      found = true
+      break
+    end
+  end
+
+  if found then
+    vim.cmd("wincmd o")  -- Close other windows (including Gdiff)
+  else
+    vim.cmd("Gvdiffsplit!")
+  end
+end, { desc = "Toggle Gvdiffsplit" })
+
+
+vim.keymap.set("n", "<leader>gl", ":diffget //2<CR>", { desc = "Get from LOCAL" })
+vim.keymap.set("n", "<leader>gr", ":diffget //3<CR>", { desc = "Get from REMOTE" })
 
 
 
