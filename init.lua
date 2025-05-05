@@ -170,6 +170,9 @@ require("lazy").setup({
     {
   	  "tpope/vim-fugitive",
 	},
+	{
+		"lewis6991/gitsigns.nvim"
+	},
 	-- Dependency for completition
 	{
 		"hrsh7th/nvim-cmp",
@@ -256,9 +259,25 @@ require("lazy").setup({
 	  	tag = "0.1.4",
 	  	dependencies = { "nvim-lua/plenary.nvim" },
 	  	config = function()
-			local builtin = require("telescope.builtin")
-			vim.keymap.set('n', '<leader>fu', builtin.lsp_references, {})     -- View usages
-			vim.keymap.set('n', '<leader>fd', builtin.lsp_definitions, {})    -- Go to definition
+			local telescope = require("telescope")
+			function open_in_background_tab(prompt_bufnr)
+				require("telescope.actions").select_tab(prompt_bufnr)
+				vim.cmd(":tabprev")
+				vim.cmd(":Telescope resume")
+			end	 
+
+			telescope.setup({
+				defaults = {
+    				mappings = {
+      	  	  	  	  i = { -- insert mode
+        				["<C-t>"] = open_in_background_tab
+        			  },
+      	  	  	  	  n = { -- normal mode 
+        				["<C-t>"] = open_in_background_tab
+      	  	  	  	  }
+    				}
+  	  	  		}
+			})
 	  	end,
 	},
 	-- Core debugging plugin
@@ -344,10 +363,25 @@ vim.keymap.set('n', '<A-Right>', ':tabnext<CR>', { silent = true })
 vim.keymap.set('n', '<A-Left>', ':tabprevious<CR>', { silent = true })
 
 
--- binding for telescope 
+
 local telescope = require("telescope.builtin")
+function telescope_resume_search_if_available()
+  	local state = require('telescope.state')
+  	local cached_pickers = state.get_global_key "cached_pickers"
+  	if cached_pickers == nil or vim.tbl_isempty(cached_pickers) then
+    	require('telescope.builtin').find_files()
+	else
+    	require('telescope.builtin').resume()
+  	end
+end 
+
+-- binding for telescope 
 vim.keymap.set('n', '<leader>ff', telescope.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', telescope.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fg', telescope_resume_search_if_available, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fu', telescope.lsp_references, {})     
+vim.keymap.set('n', '<leader>fd', telescope.lsp_definitions, {})   
+
+
 
 -- binding for debug 
 vim.keymap.set('n', '<Leader>dc', function() dap.continue() end)
