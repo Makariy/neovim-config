@@ -24,6 +24,9 @@ local autosession = require("config.auto_session")
 local treesitter = require("config.treesitter")
 local lsp_config = require("config.nvim_lspconfig")
 local nvim_cmp = require("config.nvim_cmp")
+local treesitter_textobjects = require("config.treesitter_textobjects")
+local splitjoin = require("config.splitjoin")
+local comment = require("config.comment")
 
 -- Telescope 
 local telescope = require("config.telescope")
@@ -39,7 +42,6 @@ local gitsigns = require("config.gitsigns")
 
 -- Setup 
 require("lazy").setup({
-	-- Theme 
 	theme,
 	nvim_tree,
 	bufferline,
@@ -49,6 +51,9 @@ require("lazy").setup({
 	treesitter,
 	lsp_config,
 	nvim_cmp,
+	treesitter_textobjects,
+	splitjoin,
+	comment,
 
 	telescope,
 

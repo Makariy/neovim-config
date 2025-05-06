@@ -1,7 +1,6 @@
 
 -- Open help on <Leader>h 
-vim.api.nvim_set_keymap('n', '<Leader>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
-
+vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
 
 -- binding for file tree view 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', {})
@@ -13,26 +12,33 @@ vim.keymap.set('n', '<leader>n', ':noh<CR>', {})
 vim.keymap.set('n', '<A-Right>', ':tabnext<CR>', { silent = true })
 vim.keymap.set('n', '<A-Left>', ':tabprevious<CR>', { silent = true })
 
+
+-- Configuration for commenting lines 
+vim.keymap.set('n', '<C-_>', function()
+  require('Comment.api').toggle.linewise.current()
+  vim.cmd('normal! j')  -- move cursor down
+end, { noremap = true, silent = true })
+
+vim.keymap.set('v', '<C-_>', function()
+  local esc = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
+  vim.api.nvim_feedkeys(esc, 'x', false)
+
+  local api = require('Comment.api')
+  api.toggle.linewise(vim.fn.visualmode())
+end, { noremap = true, silent = true })
+
+
+
 -- maintain cursor on the middle of the screen on <C-d> and <C-u>
 -- vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true })
 -- vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true })
 
 
-
 -- binding for telescope 
 local telescope = require("telescope.builtin")
-function telescope_resume_search_if_available()
-  	local state = require('telescope.state')
-  	local cached_pickers = state.get_global_key "cached_pickers"
-  	if cached_pickers == nil or vim.tbl_isempty(cached_pickers) then
-    	require('telescope.builtin').find_files()
-	else
-    	require('telescope.builtin').resume()
-  	end
-end 
 
 vim.keymap.set('n', '<leader>ff', telescope.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', telescope_resume_search_if_available, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fg', telescope.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fu', telescope.lsp_references, {})     
 vim.keymap.set('n', '<leader>fd', telescope.lsp_definitions, {})   
 
