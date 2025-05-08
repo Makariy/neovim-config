@@ -22,9 +22,14 @@ local autosession = require("config.auto_session")
 
 -- Completition and lsp 
 local treesitter = require("config.treesitter")
-local lsp_config = require("config.nvim_lspconfig")
-local nvim_cmp = require("config.nvim_cmp")
 local treesitter_textobjects = require("config.treesitter_textobjects")
+
+local lspconfig = require("config.nvim_lspconfig")
+local mason = require("config.mason")
+local mason_lspconfig = require("config.mason_lspconfig")
+
+
+local nvim_cmp = require("config.nvim_cmp")
 local splitjoin = require("config.splitjoin")
 local comment = require("config.comment")
 
@@ -49,9 +54,13 @@ require("lazy").setup({
 	autosession,
 
 	treesitter,
-	lsp_config,
-	nvim_cmp,
 	treesitter_textobjects,
+
+	lspconfig,
+	mason,
+	mason_lspconfig,
+		
+	nvim_cmp,
 	splitjoin,
 	comment,
 
