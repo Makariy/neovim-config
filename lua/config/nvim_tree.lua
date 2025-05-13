@@ -31,15 +31,18 @@ end
 
 function on_attach(bufnr)
   	local api = require("nvim-tree.api")
+	local harpoon_mark = require("harpoon.mark")
 
   	local function opts(desc)
       return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
   	api.config.mappings.default_on_attach(bufnr)
-  	vim.keymap.set('n', '<C-t>', function()
-		api.node.open.tab()
-		vim.cmd("tabprev")
-		vim.cmd("NvimTreeToggle")
+
+  	vim.keymap.set('n', '<A-m>', function(buf)
+		local node = api.tree.get_node_under_cursor()
+  		local buf = vim.fn.bufadd(node.absolute_path)
+  		vim.fn.bufload(buf)
+		harpoon_mark.add_file(node.absolute_path)
   	end, opts("Open tab in background"))
 end
 

@@ -1,4 +1,6 @@
 
+vim.o.updatetime = 250
+
 vim.g.mapleader = " " 
 vim.g.maplocalleader = "," 
 
@@ -53,13 +55,4 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
-
--- Show help after 250ms of cursor hover 
-vim.o.updatetime = 250
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-  group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-  callback = function ()
-    vim.diagnostic.open_float(nil, {focus=false})
-  end
-})
 

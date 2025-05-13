@@ -2,6 +2,14 @@
 -- Open help on <Leader>h 
 vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap("n", "H", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
+vim.api.nvim_set_keymap("n", "cr", "<cmd>lua vim.lsp.buf.references()<CR>", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
+vim.api.nvim_set_keymap("n", '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+vim.keymap.set("n", "<leader>cd", function()
+  vim.diagnostic.open_float(nil, { focus = false })
+end, { noremap = true, silent = true })
+
 -- binding for file tree view 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', {})
 
@@ -9,8 +17,8 @@ vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', {})
 vim.keymap.set('n', '<leader>n', ':noh<CR>', {})
 
 -- bind tab switch 
-vim.keymap.set('n', '<A-Right>', ':tabnext<CR>', { silent = true })
-vim.keymap.set('n', '<A-Left>', ':tabprevious<CR>', { silent = true })
+-- vim.keymap.set('n', '<A-Right>', ':tabnext<CR>', { silent = true })
+-- vim.keymap.set('n', '<A-Left>', ':tabprevious<CR>', { silent = true })
 
 
 -- Configuration for commenting lines 
@@ -41,6 +49,26 @@ vim.keymap.set('n', '<leader>ff', telescope.find_files, { desc = 'Telescope find
 vim.keymap.set('n', '<leader>fg', telescope.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fu', telescope.lsp_references, {})     
 vim.keymap.set('n', '<leader>fd', telescope.lsp_definitions, {})   
+
+
+
+-- Harpoon configuration
+local harpoon_mark = require("harpoon.mark")
+local harpoon_ui = require("harpoon.ui")
+
+
+vim.keymap.set('n', '<A-m>', harpoon_mark.add_file, { silent = true })
+vim.keymap.set('n', '<A-d>', harpoon_mark.rm_file, { silent = true })
+
+vim.keymap.set('n', '<A-u>', harpoon_ui.toggle_quick_menu, { silent = true })
+
+vim.keymap.set('n', '<A-Left>', harpoon_ui.nav_prev, { silent = true })
+vim.keymap.set('n', '<A-Right>', harpoon_ui.nav_next, { silent = true })
+
+vim.keymap.set('n', '<A-h>', function() harpoon_ui.nav_file(1) end, { silent = true })
+vim.keymap.set('n', '<A-j>', function() harpoon_ui.nav_file(2) end, { silent = true })
+vim.keymap.set('n', '<A-k>', function() harpoon_ui.nav_file(3) end, { silent = true })
+vim.keymap.set('n', '<A-l>', function() harpoon_ui.nav_file(4) end, { silent = true })
 
 
 -- setup key bindings 

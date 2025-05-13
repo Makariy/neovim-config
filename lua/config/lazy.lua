@@ -14,9 +14,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
+local plenary = require("config.plenary")
+
 local theme = require("config.theme")
 local nvim_tree = require("config.nvim_tree")
-local bufferline = require("config.bufferline")
 
 local autosession = require("config.auto_session")
 
@@ -36,6 +37,9 @@ local comment = require("config.comment")
 -- Telescope 
 local telescope = require("config.telescope")
 
+-- Harpoon
+local harpoon = require("config.harpoon")
+
 -- Debug 
 local nvim_dap = require("config.nvim_dap")
 local nvim_dap_ui = require("config.nvim_dap_ui")
@@ -47,9 +51,10 @@ local gitsigns = require("config.gitsigns")
 
 -- Setup 
 require("lazy").setup({
+	plenary, 
+
 	theme,
 	nvim_tree,
-	bufferline,
 
 	autosession,
 
@@ -65,6 +70,7 @@ require("lazy").setup({
 	comment,
 
 	telescope,
+	harpoon,
 
 	nvim_dap,
 	nvim_dap_ui,
