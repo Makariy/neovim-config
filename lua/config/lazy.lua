@@ -19,6 +19,8 @@ local plenary = require("config.plenary")
 local theme = require("config.theme")
 local nvim_tree = require("config.nvim_tree")
 
+local project = require("config.project")
+
 local autosession = require("config.auto_session")
 
 -- Completition and lsp 
@@ -55,6 +57,8 @@ require("lazy").setup({
 
 	theme,
 	nvim_tree,
+
+	project,
 
 	autosession,
 

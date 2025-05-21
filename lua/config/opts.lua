@@ -46,13 +46,25 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "markdown", "text" },
   callback = function()
     vim.opt_local.textwidth = 80      -- wrap lines at 80 characters
-    vim.opt_local.wrap = true         -- enable line wrapping
+    -- vim.opt_local.wrap = true         -- enable line wrapping
     vim.opt_local.formatoptions:append("t")  -- auto-wrap text while typing
     vim.opt_local.formatoptions:append("t") -- auto-wrap while typing
     vim.opt_local.formatoptions:append("a") -- auto-wrap on paste
     vim.opt_local.formatoptions:append("j") -- remove comment leader when joining lines
     vim.opt_local.formatoptions:append("n") -- smart comment formatting
-  end
+  end 
+})
+
+
+vim.api.nvim_create_autocmd("DirChanged", {
+  callback = function(args)
+    local cwd = args.file
+    local project_config = cwd .. "/.nvim.lua"
+    if vim.fn.filereadable(project_config) == 1 then
+      vim.print("Here")
+      dofile(project_config)
+    end
+  end,
 })
 
 
