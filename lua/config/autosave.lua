@@ -1,14 +1,14 @@
 
--- Autosave file when typing 
-local timer = vim.loop.new_timer()
-vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-    callback = function()
-        timer:stop()
-        timer:start(100, 0, vim.schedule_wrap(function()
-            if vim.bo.modifiable and vim.bo.buftype == "" and vim.fn.expand('%') ~= "" then
-                vim.cmd("silent write")
-            end
-        end))
-    end,
-})
+return {
+	"Pocco81/auto-save.nvim",
+	config = function() 
+		require("auto-save").setup({
+  	  	  trigger_events = {"InsertLeave", "TextChanged"}, -- not on every keystroke
+  	  	  debounce_delay = 2000, -- wait 2s before saving
+  	  	  condition = function(buf)
+    		return vim.bo.filetype ~= "undotree" -- don't save undotree
+  	  	  end,
+		})
+	end 
+}
 

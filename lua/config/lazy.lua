@@ -21,20 +21,23 @@ local nvim_tree = require("config.nvim_tree")
 
 local project = require("config.project")
 
+local autosave = require("config.autosave")
 local autosession = require("config.auto_session")
 
 -- Completition and lsp 
 local treesitter = require("config.treesitter")
 local treesitter_textobjects = require("config.treesitter_textobjects")
+local treesitter_context = require("config.treesitter_context")
 
 local lspconfig = require("config.nvim_lspconfig")
 local mason = require("config.mason")
 local mason_lspconfig = require("config.mason_lspconfig")
 
-
 local nvim_cmp = require("config.nvim_cmp")
 local splitjoin = require("config.splitjoin")
 local comment = require("config.comment")
+
+local undotree = require("config.undotree")
 
 -- Telescope 
 local telescope = require("config.telescope")
@@ -60,10 +63,12 @@ require("lazy").setup({
 
 	project,
 
+	autosave,
 	autosession,
 
 	treesitter,
 	treesitter_textobjects,
+	treesitter_context,
 
 	lspconfig,
 	mason,
@@ -72,6 +77,8 @@ require("lazy").setup({
 	nvim_cmp,
 	splitjoin,
 	comment,
+
+	undotree,
 
 	telescope,
 	harpoon,

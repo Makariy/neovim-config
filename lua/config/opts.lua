@@ -1,5 +1,5 @@
 
-vim.o.updatetime = 250
+vim.o.updatetime = 100
 
 vim.g.mapleader = " " 
 vim.g.maplocalleader = "," 
