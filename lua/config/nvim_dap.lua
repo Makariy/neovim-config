@@ -9,7 +9,7 @@ return {
 	  args = { '-m', 'debugpy.adapter' },
 	}
 	vim.fn.sign_define('DapBreakpoint', {
-	  text = '●',         -- Unicode red circle
+	  text = '●',         
 	  texthl = 'DapBreakpoint',
 	  linehl = '',
 	  numhl = ''

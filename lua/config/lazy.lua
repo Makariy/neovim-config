@@ -19,7 +19,7 @@ local plenary = require("config.plenary")
 local theme = require("config.theme")
 local nvim_tree = require("config.nvim_tree")
 
-local project = require("config.project")
+-- local project = require("config.project")
 
 local autosave = require("config.autosave")
 local autosession = require("config.auto_session")
@@ -61,7 +61,7 @@ require("lazy").setup({
 	theme,
 	nvim_tree,
 
-	project,
+	-- project,
 
 	autosave,
 	autosession,
@@ -88,5 +88,27 @@ require("lazy").setup({
 
 	vim_fugitive,
 	gitsigns,
+
+	-- {
+	-- 	"Makariy/pyrefac.nvim",
+	-- 	config = function() 
+	-- 		require("pyrefac").setup({
+	-- 			format_command = "ruff format {}",
+	-- 		})
+	-- 	end 
+	-- }
+	{
+		dir = '/home/makariy/code/pyrefac.nvim/',
+		dev = true,
+		name = 'pyrefac',
+		-- ft = 'python',
+		config = function() 
+			require("pyrefac").setup({
+				pyrefac_command = "pyrefac --exclude mnist --exclude data",
+				format_command = "ruff format {}",
+			})
+		end 
+	},
 })
+
 

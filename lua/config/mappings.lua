@@ -12,7 +12,7 @@ vim.keymap.set("n", "<leader>cd", function()
 end, { noremap = true, silent = true })
 
 -- binding for file tree view 
-vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', {})
+vim.keymap.set('n', '<A-e>', ':NvimTreeToggle<CR>', {})
 
 -- bind no highlight 
 vim.keymap.set('n', '<leader>n', ':noh<CR>', {})
@@ -42,8 +42,8 @@ end, { noremap = true, silent = true })
 
 
 -- maintain cursor on the middle of the screen on <C-d> and <C-u>
-vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
 vim.keymap.set('n', 'n', 'nzz', { noremap = true, silent = true })
 vim.keymap.set('n', 'N', 'Nzz', { noremap = true, silent = true })
 
@@ -97,17 +97,32 @@ vim.keymap.set('n', '<Leader>dt', function() dap.terminate() end)
 -- git mappings 
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 vim.keymap.set('n', '<leader>gg', function()
-  local is_diff = vim.wo.diff
-  if is_diff then
-    vim.cmd("diffoff!")
-    vim.cmd("wincmd o")
-  else
-    vim.cmd("Gvdiffsplit")
+  local fugitive_win = nil
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.api.nvim_buf_is_valid(buf) and
+       vim.api.nvim_buf_get_name(buf):match("^fugitive://") and
+       vim.api.nvim_win_get_option(win, 'diff') then
+      fugitive_win = win
+      break
+    end
   end
-end, { desc = "Toggle Gvdiffsplit" })
+
+  if fugitive_win then
+    vim.api.nvim_win_close(fugitive_win, false)
+
+    vim.cmd('diffoff!')
+  else
+    vim.cmd('rightbelow Gvdiffsplit')	
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w><left>", true, false, true), 'n', false)
+  end
+end, { desc = "Toggle Git diff" })
 
 
-vim.keymap.set("n", "<leader>gl", ":diffget //2<CR>", { desc = "Get from LOCAL" })
-vim.keymap.set("n", "<leader>gr", ":diffget //3<CR>", { desc = "Get from REMOTE" })
+vim.keymap.set("n", "<leader>gp", ":diffget", { desc = "Get from current buffer" })
+
+
+-- Pyrefac config 
+vim.keymap.set("x", "<leader>ms", ":PyrefacMove<CR>", { desc = "Move symbols" })
 
 

@@ -1,4 +1,14 @@
 
+local function load_project_config()
+  local cwd = vim.fn.getcwd()
+  local project_config = cwd .. "/.nvim.lua"
+
+  if vim.fn.filereadable(project_config) == 1 then
+    dofile(project_config)
+  end
+end 
+
+
 vim.o.updatetime = 100
 
 vim.g.mapleader = " " 
@@ -13,7 +23,6 @@ vim.wo.relativenumber=true
 vim.g.noswapfile=true 
 vim.opt.scrolloff=7
 
-vim.g.expandtab=true 
 vim.g.fileformat=unix
 
 vim.g.expandtab=true 
@@ -42,18 +51,18 @@ vim.opt.termguicolors = true
 vim.cmd.colorscheme "vscode"
 
 -- Auto-wrap text at 80 characters for markdown and text files
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "markdown", "text" },
-  callback = function()
-    vim.opt_local.textwidth = 80      -- wrap lines at 80 characters
-    -- vim.opt_local.wrap = true         -- enable line wrapping
-    vim.opt_local.formatoptions:append("t")  -- auto-wrap text while typing
-    vim.opt_local.formatoptions:append("t") -- auto-wrap while typing
-    vim.opt_local.formatoptions:append("a") -- auto-wrap on paste
-    vim.opt_local.formatoptions:append("j") -- remove comment leader when joining lines
-    vim.opt_local.formatoptions:append("n") -- smart comment formatting
-  end 
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "markdown", "text" },
+--   callback = function()
+--     vim.opt_local.textwidth = 80      -- wrap lines at 80 characters
+--     -- vim.opt_local.wrap = true         -- enable line wrapping
+--     vim.opt_local.formatoptions:append("t")  -- auto-wrap text while typing
+--     vim.opt_local.formatoptions:append("t") -- auto-wrap while typing
+--     vim.opt_local.formatoptions:append("a") -- auto-wrap on paste
+--     vim.opt_local.formatoptions:append("j") -- remove comment leader when joining lines
+--     vim.opt_local.formatoptions:append("n") -- smart comment formatting
+--   end 
+-- })
 
 
 vim.api.nvim_create_autocmd("DirChanged", {
@@ -67,4 +76,5 @@ vim.api.nvim_create_autocmd("DirChanged", {
   end,
 })
 
+load_project_config()
 
