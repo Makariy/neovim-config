@@ -6,7 +6,7 @@ vim.keymap.set({ 'n', 'i' }, '<C-h>', '<cmd>lua vim.lsp.buf.signature_help()<CR>
 vim.api.nvim_set_keymap("n", "H", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "cr", "<cmd>lua vim.lsp.buf.references()<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
-vim.api.nvim_set_keymap("n", '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+vim.keymap.set({"n", "v"}, '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
 vim.keymap.set("n", "<leader>cd", function()
   vim.diagnostic.open_float(nil, { focus = false })
 end, { noremap = true, silent = true })
@@ -95,31 +95,12 @@ vim.keymap.set('n', '<Leader>dt', function() dap.terminate() end)
 
 
 -- git mappings 
-vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-vim.keymap.set('n', '<leader>gg', function()
-  local fugitive_win = nil
-  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    if vim.api.nvim_buf_is_valid(buf) and
-       vim.api.nvim_buf_get_name(buf):match("^fugitive://") and
-       vim.api.nvim_win_get_option(win, 'diff') then
-      fugitive_win = win
-      break
-    end
-  end
+vim.keymap.set("n", "gs", vim.cmd.Git)
+vim.keymap.set('n', '<leader>gg', ":Gvdiffsplit!<CR>", { desc = "Open merge" })
+vim.keymap.set('n', '<leader>gt', ":Gwrite<CR>", { desc = "Finilize merge" })
 
-  if fugitive_win then
-    vim.api.nvim_win_close(fugitive_win, false)
-
-    vim.cmd('diffoff!')
-  else
-    vim.cmd('rightbelow Gvdiffsplit')	
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w><left>", true, false, true), 'n', false)
-  end
-end, { desc = "Toggle Git diff" })
-
-
-vim.keymap.set("n", "<leader>gp", ":diffget", { desc = "Get from current buffer" })
+vim.keymap.set({"n", "v"}, "<leader>gl", ":diffget //2<CR>", { desc = "Get from left buffer" })
+vim.keymap.set({"n", "v"}, "<leader>gr", ":diffget //3<CR>", { desc = "Get from right buffer" })
 
 
 -- Pyrefac config 

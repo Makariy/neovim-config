@@ -34,6 +34,8 @@ vim.g.smartindent=true
 vim.opt.copyindent=true
 vim.opt.preserveindent = true
 
+vim.opt.diffopt:append("context:99999999")
+
 --vim.g.netrw_banner=0 
 --vim.g.netrw_liststyle=3
 --vim.g.netrw_browse_split=3
