@@ -15,20 +15,24 @@ end
 return {
 	"mason-org/mason-lspconfig.nvim",
 	config = function() 
-		local lspconfig = require("lspconfig")
+		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 		local mason_lsp_config = require("mason-lspconfig")
 
-		mason_lsp_config.setup({
-  			ensure_installed = {
-  				"pyrefly",  -- Finally!!!
-				"ruff",
-  				"gopls",
-  			},
-  			automatic_enable = {
-        		exclude = {
-        		}
-    		}
+		mason_lsp_config.setup({})
+
+		vim.lsp.config('*', {
+  			capabilities = capabilities,
 		})
+		vim.lsp.config('pyrefly', {
+  			settings = {
+    			python = {
+    				pyrefly = {
+      					displayTypeErrors = "force-on",
+    				}
+    			}
+  			},
+		})
+		vim.lsp.enable({"pyrefly", "ruff", "gopls"})
 	end
 }
 

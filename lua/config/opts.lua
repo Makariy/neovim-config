@@ -80,3 +80,4 @@ vim.api.nvim_create_autocmd("DirChanged", {
 
 load_project_config()
 
+

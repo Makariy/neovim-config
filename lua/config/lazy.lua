@@ -97,18 +97,18 @@ require("lazy").setup({
 	-- 		})
 	-- 	end 
 	-- }
-	{
-		dir = '/home/makariy/code/pyrefac.nvim/',
-		dev = true,
-		name = 'pyrefac',
-		-- ft = 'python',
-		config = function() 
-			require("pyrefac").setup({
-				pyrefac_command = "pyrefac --exclude mnist --exclude data",
-				format_command = "ruff format {}",
-			})
-		end 
-	},
+	-- {
+	-- 	dir = '/home/makariy/code/pyrefac.nvim/',
+	-- 	dev = true,
+	-- 	name = 'pyrefac',
+	-- 	-- ft = 'python',
+	-- 	config = function() 
+	-- 		require("pyrefac").setup({
+	-- 			pyrefac_command = "pyrefac --exclude mnist --exclude data",
+	-- 			format_command = "ruff format {}",
+	-- 		})
+	-- 	end 
+	-- },
 })
 
 
