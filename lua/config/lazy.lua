@@ -34,12 +34,10 @@ local mason = require("config.mason")
 local mason_lspconfig = require("config.mason_lspconfig")
 
 local nvim_cmp = require("config.nvim_cmp")
-local splitjoin = require("config.splitjoin")
-local comment = require("config.comment")
+local mini = require("config.mini")
 
 local undotree = require("config.undotree")
 
--- Telescope 
 local telescope = require("config.telescope")
 
 -- Harpoon
@@ -75,8 +73,7 @@ require("lazy").setup({
 	mason_lspconfig,
 		
 	nvim_cmp,
-	splitjoin,
-	comment,
+	mini,
 
 	undotree,
 
@@ -97,18 +94,18 @@ require("lazy").setup({
 	-- 		})
 	-- 	end 
 	-- }
-	-- {
-	-- 	dir = '/home/makariy/code/pyrefac.nvim/',
-	-- 	dev = true,
-	-- 	name = 'pyrefac',
-	-- 	-- ft = 'python',
-	-- 	config = function() 
-	-- 		require("pyrefac").setup({
-	-- 			pyrefac_command = "pyrefac --exclude mnist --exclude data",
-	-- 			format_command = "ruff format {}",
-	-- 		})
-	-- 	end 
-	-- },
+	{
+		dir = '/home/makariy/code/pyrefac.nvim/',
+		dev = true,
+		name = 'pyrefac',
+		-- ft = 'python',
+		config = function() 
+			require("pyrefac").setup({
+				pyrefac_command = "pyrefac --exclude mnist --exclude data",
+				format_command = "ruff format {}",
+			})
+		end 
+	},
 })
 
 

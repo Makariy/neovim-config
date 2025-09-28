@@ -25,22 +25,6 @@ vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 -- vim.keymap.set('n', '<A-Left>', ':tabprevious<CR>', { silent = true })
 
 
--- Configuration for commenting lines 
-vim.keymap.set('n', '<C-_>', function()
-  require('Comment.api').toggle.linewise.current()
-  vim.cmd('normal! j')  -- move cursor down
-end, { noremap = true, silent = true })
-
-vim.keymap.set('v', '<C-_>', function()
-  local esc = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
-  vim.api.nvim_feedkeys(esc, 'x', false)
-
-  local api = require('Comment.api')
-  api.toggle.linewise(vim.fn.visualmode())
-end, { noremap = true, silent = true })
-
-
-
 -- maintain cursor on the middle of the screen on <C-d> and <C-u>
 -- vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
 -- vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
