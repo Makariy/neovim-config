@@ -47,7 +47,6 @@ vim.cmd [[
 	set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 ]]
 
-
 -- theme 
 vim.opt.termguicolors = true
 vim.cmd.colorscheme "vscode"
@@ -76,6 +75,12 @@ vim.api.nvim_create_autocmd("DirChanged", {
       dofile(project_config)
     end
   end,
+})
+
+vim.diagnostic.config({
+  underline = true,
+  update_in_insert = true, 
+  severity_sort = true,
 })
 
 load_project_config()

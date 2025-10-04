@@ -32,7 +32,7 @@ return {
     			}
   			},
 		})
-		vim.lsp.enable({"pyrefly", "ruff", "gopls"})
+		vim.lsp.enable({"pyrefly", "ruff", "gopls", "cspell_ls"})
 	end
 }
 
