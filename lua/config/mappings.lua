@@ -1,9 +1,16 @@
 
+vim.keymap.set("i", "<C-c>", function()
+	vim.print("Dont do that")
+end)
 
 -- Open help on <Leader>h 
-vim.keymap.set({ 'n', 'i' }, '<C-h>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
+vim.keymap.set({ 'n', 'i' }, '<C-h>', function() 
+	vim.lsp.buf.signature_help({border = "rounded"})
+end, { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "H", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
+vim.keymap.set("n", "H", function() 
+	vim.lsp.buf.hover({border = "rounded"})
+end, { silent = true })
 vim.api.nvim_set_keymap("n", "cr", "<cmd>lua vim.lsp.buf.references()<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
 vim.keymap.set({"n", "v"}, '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })

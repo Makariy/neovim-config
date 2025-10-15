@@ -33,6 +33,7 @@ vim.g.autoindent=true
 vim.g.smartindent=true 
 vim.opt.copyindent=true
 vim.opt.preserveindent = true
+vim.opt.signcolumn = "yes"
 
 vim.opt.diffopt:append("context:99999999")
 
@@ -78,10 +79,11 @@ vim.api.nvim_create_autocmd("DirChanged", {
 })
 
 vim.diagnostic.config({
-  underline = true,
-  update_in_insert = true, 
-  severity_sort = true,
+  	underline = true,
+  	severity_sort = true,
 })
+
+
 
 load_project_config()
 

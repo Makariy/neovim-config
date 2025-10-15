@@ -15,6 +15,10 @@ return {
 				{ name = "buffer" },
 				{ name = "path" },
 			}),
+			window = {
+				completion = cmp.config.window.bordered(),
+      			documentation = cmp.config.window.bordered(),
+			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<CR>"] = cmp.mapping.confirm({ select = true }),
