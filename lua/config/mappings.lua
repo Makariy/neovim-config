@@ -84,11 +84,34 @@ vim.keymap.set('n', '<Leader>du', function() dapui.toggle() end)
 vim.keymap.set('n', '<Leader>dt', function() dap.terminate() end)
 
 
-
 -- git mappings 
-vim.keymap.set("n", "gs", vim.cmd.Git)
-vim.keymap.set('n', '<leader>gg', ":Gvdiffsplit!<CR>", { desc = "Open merge" })
-vim.keymap.set('n', '<leader>gt', ":Gwrite<CR>", { desc = "Finilize merge" })
+local function fugitive_toggle()
+  local fugitive_win = nil
+
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+    if ft == "fugitive" then
+      fugitive_win = win
+      break
+    end
+  end
+
+  if fugitive_win then
+    vim.api.nvim_win_close(fugitive_win, true)
+  else
+    vim.cmd("Git")
+  end
+end
+vim.keymap.set("n", "<leader>gs", fugitive_toggle)
+vim.keymap.set('n', '<leader>gg', function() 
+	local win_count = #vim.api.nvim_list_wins()
+	if win_count == 1 then 
+		vim.cmd(":Gvdiffsplit! | wincmd J")
+	else
+		vim.cmd("only")
+	end 
+end, { desc = "Open merge" })
 
 vim.keymap.set({"n", "v"}, "<leader>gl", ":diffget //2<CR>", { desc = "Get from left buffer" })
 vim.keymap.set({"n", "v"}, "<leader>gr", ":diffget //3<CR>", { desc = "Get from right buffer" })
