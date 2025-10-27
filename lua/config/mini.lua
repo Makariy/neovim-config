@@ -9,8 +9,10 @@ return {
       		  split = "",     -- Disable split-only mapping
       		  join = "",      -- Disable join-only mapping
       		},
+      		detect = {
+				brackets = { '%b()', '%b[]', '%b{}', '%b><' }
+      		}
     	})
-    	require("mini.pairs").setup({})
     	require("mini.comment").setup({
 			mappings = {
 				comment_line = "<C-_>",

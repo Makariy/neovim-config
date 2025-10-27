@@ -51,6 +51,7 @@ local nvim_dap_ui = require("config.nvim_dap_ui")
 local vim_fugitive = require("config.vim_fugitive")
 local gitsigns = require("config.gitsigns")
 
+local lualine = require("config.lualine")
 
 -- Setup 
 require("lazy").setup({
@@ -85,6 +86,8 @@ require("lazy").setup({
 
 	vim_fugitive,
 	gitsigns,
+
+	lualine,
 
 	-- {
 	-- 	"Makariy/pyrefac.nvim",
