@@ -14,7 +14,6 @@ vim.o.updatetime = 100
 vim.g.mapleader = " " 
 vim.g.maplocalleader = "," 
 
-vim.g.mouse=true 
 vim.g.encoding="utf-8"
 vim.wo.number=true 
 vim.wo.relativenumber=true
@@ -66,13 +65,22 @@ vim.cmd.colorscheme "vscode"
 --   end 
 -- })
 
+vim.api.nvim_create_autocmd("FileType", {
+  -- Lista de lenguajes a los que aplicar esto
+  pattern = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
+  callback = function()
+    vim.opt_local.tabstop = 2      -- Ancho visual del tab
+    vim.opt_local.shiftwidth = 2   -- Ancho de la indentación (>> y <<)
+    vim.opt_local.softtabstop = 2  -- Espacios que cuenta la tecla Tab
+    vim.opt_local.expandtab = true -- Convierte tabs en espacios
+  end,
+})
 
 vim.api.nvim_create_autocmd("DirChanged", {
   callback = function(args)
     local cwd = args.file
     local project_config = cwd .. "/.nvim.lua"
     if vim.fn.filereadable(project_config) == 1 then
-      vim.print("Here")
       dofile(project_config)
     end
   end,

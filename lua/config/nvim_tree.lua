@@ -27,6 +27,7 @@ function config()
 	  },
 	  on_attach = on_attach
 	})
+
 end
 
 function on_attach(bufnr)

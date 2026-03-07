@@ -10,7 +10,6 @@ return {
 
 		function open_in_background_tab(prompt_bufnr)
 			local filename = state.get_current_picker(prompt_bufnr).all_previewers[1].state.bufname
-			vim.print(filename)
 			harpoon_mark.add_file(filename)
 			-- require("telescope.actions").select_tab(prompt_bufnr)
 			-- vim.cmd(":tabprev")

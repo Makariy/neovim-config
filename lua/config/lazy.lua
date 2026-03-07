@@ -17,7 +17,8 @@ vim.opt.rtp:prepend(lazypath)
 local plenary = require("config.plenary")
 
 local theme = require("config.theme")
-local nvim_tree = require("config.nvim_tree")
+-- local nvim_tree = require("config.nvim_tree")
+local oil = require("config.oil")
 
 -- local project = require("config.project")
 
@@ -30,11 +31,12 @@ local treesitter_textobjects = require("config.treesitter_textobjects")
 local treesitter_context = require("config.treesitter_context")
 
 local lspconfig = require("config.nvim_lspconfig")
+
+local blink = require("config.blink")
+local mini = require("config.mini")
+
 local mason = require("config.mason")
 local mason_lspconfig = require("config.mason_lspconfig")
-
-local nvim_cmp = require("config.nvim_cmp")
-local mini = require("config.mini")
 
 local undotree = require("config.undotree")
 
@@ -55,10 +57,11 @@ local lualine = require("config.lualine")
 
 -- Setup 
 require("lazy").setup({
-	plenary, 
+	plenary,
 
 	theme,
-	nvim_tree,
+	-- nvim_tree,
+	oil,
 
 	-- project,
 
@@ -70,12 +73,12 @@ require("lazy").setup({
 	treesitter_context,
 
 	lspconfig,
+	blink, 
+
+	mini,
 	mason,
 	mason_lspconfig,
 		
-	nvim_cmp,
-	mini,
-
 	undotree,
 
 	telescope,

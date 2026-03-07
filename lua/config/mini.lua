@@ -10,7 +10,7 @@ return {
       		  join = "",      -- Disable join-only mapping
       		},
       		detect = {
-				brackets = { '%b()', '%b[]', '%b{}', '%b><' }
+				brackets = { '%b()', '%b[]', '%b{}' }
       		}
     	})
     	require("mini.comment").setup({

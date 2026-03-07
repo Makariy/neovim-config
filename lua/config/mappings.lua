@@ -5,11 +5,11 @@ end)
 
 -- Open help on <Leader>h 
 vim.keymap.set({ 'n', 'i' }, '<C-h>', function() 
-	vim.lsp.buf.signature_help({border = "rounded"})
+	vim.lsp.buf.signature_help({border = "bold"})
 end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "H", function() 
-	vim.lsp.buf.hover({border = "rounded"})
+	vim.lsp.buf.hover({border = "bold"})
 end, { silent = true })
 vim.api.nvim_set_keymap("n", "cr", "<cmd>lua vim.lsp.buf.references()<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
@@ -18,8 +18,11 @@ vim.keymap.set("n", "<leader>cd", function()
   vim.diagnostic.open_float(nil, { focus = false })
 end, { noremap = true, silent = true })
 
+
 -- binding for file tree view 
-vim.keymap.set('n', '<A-e>', ':NvimTreeToggle<CR>', {})
+-- vim.keymap.set('n', '<A-e>', ':NvimTreeToggle<CR>', {})
+
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- bind no highlight 
 vim.keymap.set('n', '<leader>n', ':noh<CR>', {})
@@ -42,10 +45,11 @@ vim.keymap.set('n', 'N', 'Nzz', { noremap = true, silent = true })
 -- binding for telescope 
 local telescope = require("telescope.builtin")
 
+vim.keymap.set("n", "<leader>lr", ":LspRestart <CR>", { desc = "Restart lsp" })
 vim.keymap.set('n', '<leader>ff', telescope.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', telescope.live_grep, { desc = 'Telescope live grep' })
-vim.keymap.set('n', '<leader>fu', telescope.lsp_references, {})     
-vim.keymap.set('n', '<leader>fd', telescope.lsp_definitions, {})   
+vim.keymap.set('n', '<leader>fu', telescope.lsp_references, {})
+vim.keymap.set('n', '<leader>fd', telescope.lsp_definitions, {})
 
 
 
@@ -112,6 +116,9 @@ vim.keymap.set('n', '<leader>gg', function()
 		vim.cmd("only")
 	end 
 end, { desc = "Open merge" })
+vim.keymap.set("n", "<leader>gh", function() 
+	vim.cmd(":Git log --graph --oneline --decorate --all")
+end)
 
 vim.keymap.set({"n", "v"}, "<leader>gl", ":diffget //2<CR>", { desc = "Get from left buffer" })
 vim.keymap.set({"n", "v"}, "<leader>gr", ":diffget //3<CR>", { desc = "Get from right buffer" })
