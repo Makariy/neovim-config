@@ -27,6 +27,7 @@ return {
 				end
 			}
     	})
+    	require("mini.ai").setup({})
 	end
 }
 

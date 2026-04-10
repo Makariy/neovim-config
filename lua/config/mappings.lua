@@ -1,36 +1,40 @@
-
 vim.keymap.set("i", "<C-c>", function()
 	vim.print("Dont do that")
 end)
 
--- Open help on <Leader>h 
-vim.keymap.set({ 'n', 'i' }, '<C-h>', function() 
-	vim.lsp.buf.signature_help({border = "bold"})
+-- Open help on <Leader>h
+vim.keymap.set({ 'n', 'i' }, '<C-h>', function()
+	vim.lsp.buf.signature_help({ border = "bold" })
 end, { noremap = true, silent = true })
 
-vim.keymap.set("n", "H", function() 
-	vim.lsp.buf.hover({border = "bold"})
+vim.keymap.set("n", "H", function()
+	vim.lsp.buf.hover({ border = "bold" })
 end, { silent = true })
-vim.api.nvim_set_keymap("n", "cr", "<cmd>lua vim.lsp.buf.references()<CR>", { silent = true })
-vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
-vim.keymap.set({"n", "v"}, '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+vim.keymap.set("n", "<leader>fr", "<cmd>lua vim.lsp.buf.references()<CR>", { silent = true })
+vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
+vim.keymap.set("n", "<leader>cf", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, '<leader>cn', ":cnext<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, '<leader>cN', ":cprevious<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, '<leader>co', ":copen<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, '<leader>cO', ":cclose<CR>", { silent = true })
 vim.keymap.set("n", "<leader>cd", function()
-  vim.diagnostic.open_float(nil, { focus = false })
+	vim.diagnostic.open_float(nil, { focus = false })
 end, { noremap = true, silent = true })
 
 
--- binding for file tree view 
+-- binding for file tree view
 -- vim.keymap.set('n', '<A-e>', ':NvimTreeToggle<CR>', {})
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
--- bind no highlight 
+-- bind no highlight
 vim.keymap.set('n', '<leader>n', ':noh<CR>', {})
 
 
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
--- bind tab switch 
+-- bind tab switch
 -- vim.keymap.set('n', '<A-Right>', ':tabnext<CR>', { silent = true })
 -- vim.keymap.set('n', '<A-Left>', ':tabprevious<CR>', { silent = true })
 
@@ -42,16 +46,16 @@ vim.keymap.set('n', 'n', 'nzz', { noremap = true, silent = true })
 vim.keymap.set('n', 'N', 'Nzz', { noremap = true, silent = true })
 
 
--- binding for telescope 
+-- binding for telescope
 local telescope = require("telescope.builtin")
+local multi_grep = require("config.telescope.multi_grep")
 
-vim.keymap.set("n", "<leader>lr", ":LspRestart <CR>", { desc = "Restart lsp" })
+vim.keymap.set("n", "<leader>lr", ":lsp restart <CR>", { desc = "Restart lsp" })
 vim.keymap.set('n', '<leader>ff', telescope.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', telescope.live_grep, { desc = 'Telescope live grep' })
+-- vim.keymap.set('n', '<leader>fg', telescope.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fg', multi_grep.live_multi_grep, { desc = 'Telescope live multi grep' })
 vim.keymap.set('n', '<leader>fu', telescope.lsp_references, {})
 vim.keymap.set('n', '<leader>fd', telescope.lsp_definitions, {})
-
-
 
 -- Harpoon configuration
 local harpoon_mark = require("harpoon.mark")
@@ -70,13 +74,14 @@ vim.keymap.set('n', '<A-h>', function() harpoon_ui.nav_file(1) end, { silent = t
 vim.keymap.set('n', '<A-j>', function() harpoon_ui.nav_file(2) end, { silent = true })
 vim.keymap.set('n', '<A-k>', function() harpoon_ui.nav_file(3) end, { silent = true })
 vim.keymap.set('n', '<A-l>', function() harpoon_ui.nav_file(4) end, { silent = true })
+vim.keymap.set('n', '<A-;>', function() harpoon_ui.nav_file(5) end, { silent = true })
+vim.keymap.set('n', "<A-'>", function() harpoon_ui.nav_file(6) end, { silent = true })
 
 
--- setup key bindings 
 local dap = require("dap")
 local dapui = require("dapui")
 
--- binding for debug 
+-- binding for debug
 vim.keymap.set('n', '<Leader>dc', function() dap.continue() end)
 vim.keymap.set('n', '<Leader>do', function() dap.step_over() end)
 vim.keymap.set('n', '<Leader>di', function() dap.step_into() end)
@@ -88,44 +93,37 @@ vim.keymap.set('n', '<Leader>du', function() dapui.toggle() end)
 vim.keymap.set('n', '<Leader>dt', function() dap.terminate() end)
 
 
--- git mappings 
+-- git mappings
 local function fugitive_toggle()
-  local fugitive_win = nil
+	local fugitive_win = nil
 
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-    if ft == "fugitive" then
-      fugitive_win = win
-      break
-    end
-  end
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		local buf = vim.api.nvim_win_get_buf(win)
+		local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+		if ft == "fugitive" then
+			fugitive_win = win
+			break
+		end
+	end
 
-  if fugitive_win then
-    vim.api.nvim_win_close(fugitive_win, true)
-  else
-    vim.cmd("Git")
-  end
+	if fugitive_win then
+		vim.api.nvim_win_close(fugitive_win, true)
+	else
+		vim.cmd("Git")
+	end
 end
 vim.keymap.set("n", "<leader>gs", fugitive_toggle)
-vim.keymap.set('n', '<leader>gg', function() 
-	local win_count = #vim.api.nvim_list_wins()
-	if win_count == 1 then 
-		vim.cmd(":Gvdiffsplit! | wincmd J")
-	else
-		vim.cmd("only")
-	end 
+vim.keymap.set('n', '<leader>gg', function()
+	vim.cmd(":Gvdiffsplit! | wincmd J")
 end, { desc = "Open merge" })
-vim.keymap.set("n", "<leader>gh", function() 
+vim.keymap.set("n", "<leader>gw", ":Gwrite<CR>")
+vim.keymap.set("n", "<leader>gh", function()
 	vim.cmd(":Git log --graph --oneline --decorate --all")
 end)
 
-vim.keymap.set({"n", "v"}, "<leader>gl", ":diffget //2<CR>", { desc = "Get from left buffer" })
-vim.keymap.set({"n", "v"}, "<leader>gr", ":diffget //3<CR>", { desc = "Get from right buffer" })
+vim.keymap.set({ "n", "v" }, "<leader>gl", ":diffget //2<CR>", { desc = "Get from left buffer" })
+vim.keymap.set({ "n", "v" }, "<leader>gr", ":diffget //3<CR>", { desc = "Get from right buffer" })
 
 
--- Pyrefac config 
+-- Pyrefac config
 vim.keymap.set("x", "<leader>ms", ":PyrefacMove<CR>", { desc = "Move symbols" })
-
-
-

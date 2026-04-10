@@ -17,6 +17,9 @@ return {
 		end	 
 
 		telescope.setup({
+			extensions = {
+				fzf = {}
+			},
 			defaults = {
     			mappings = {
       	  	  	  i = { -- insert mode

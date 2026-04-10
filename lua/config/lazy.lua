@@ -1,5 +1,4 @@
-
--- Initialize Lazy 
+-- Initialize Lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
@@ -25,10 +24,9 @@ local oil = require("config.oil")
 local autosave = require("config.autosave")
 local autosession = require("config.auto_session")
 
--- Completition and lsp 
+-- Completition and lsp
 local treesitter = require("config.treesitter")
-local treesitter_textobjects = require("config.treesitter_textobjects")
-local treesitter_context = require("config.treesitter_context")
+local context = require("config.context")
 
 local lspconfig = require("config.nvim_lspconfig")
 
@@ -45,17 +43,17 @@ local telescope = require("config.telescope")
 -- Harpoon
 local harpoon = require("config.harpoon")
 
--- Debug 
+-- Debug
 local nvim_dap = require("config.nvim_dap")
 local nvim_dap_ui = require("config.nvim_dap_ui")
 
--- Git 
+-- Git
 local vim_fugitive = require("config.vim_fugitive")
 local gitsigns = require("config.gitsigns")
 
 local lualine = require("config.lualine")
 
--- Setup 
+-- Setup
 require("lazy").setup({
 	plenary,
 
@@ -69,16 +67,16 @@ require("lazy").setup({
 	autosession,
 
 	treesitter,
-	treesitter_textobjects,
-	treesitter_context,
+	context,
 
 	lspconfig,
-	blink, 
+	blink,
 
 	mini,
+
 	mason,
 	mason_lspconfig,
-		
+
 	undotree,
 
 	telescope,
@@ -94,24 +92,22 @@ require("lazy").setup({
 
 	-- {
 	-- 	"Makariy/pyrefac.nvim",
-	-- 	config = function() 
+	-- 	config = function()
 	-- 		require("pyrefac").setup({
 	-- 			format_command = "ruff format {}",
 	-- 		})
-	-- 	end 
+	-- 	end
 	-- }
 	{
 		dir = '/home/makariy/code/pyrefac.nvim/',
 		dev = true,
 		name = 'pyrefac',
 		-- ft = 'python',
-		config = function() 
+		config = function()
 			require("pyrefac").setup({
 				pyrefac_command = "pyrefac --exclude mnist --exclude data",
 				format_command = "ruff format {}",
 			})
-		end 
+		end
 	},
 })
-
-
